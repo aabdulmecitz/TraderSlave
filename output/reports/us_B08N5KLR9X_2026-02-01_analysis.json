@@ -1,0 +1,68 @@
+{
+  "asin": "B08N5KLR9X",
+  "title": "Unknown",
+  "brand": null,
+  "category": null,
+  "arbitrage_analysis": {
+    "buy_box_price": 0.0,
+    "amazon_fees": 0.0,
+    "fba_costs": 3.5,
+    "overhead_cost": 0.0,
+    "net_profit": -3.5,
+    "roi_percentage": -100.0,
+    "margin_percentage": 0.0,
+    "buybox_risk_level": "low",
+    "amazon_is_seller": false,
+    "fba_seller_count": 0,
+    "total_offer_count": 0,
+    "velocity_grade": "slow",
+    "bsr_trend": "stable",
+    "estimated_monthly_sales": 0,
+    "capital_turnover_days": null
+  },
+  "private_label_analysis": {
+    "pl_score": 39,
+    "pl_score_breakdown": {
+      "velocity_score": 20,
+      "rating_gap_score": 20,
+      "competition_score": 100,
+      "momentum_score": 15
+    },
+    "sentiment_gaps": [],
+    "has_improvement_opportunity": false,
+    "target_cogs": 0.0,
+    "projected_pl_margin": 0.0,
+    "projected_pl_profit": 0.0,
+    "market_demand_signals": {
+      "review_velocity_monthly": 0,
+      "estimated_monthly_sales": 0,
+      "bsr_current": 999999,
+      "demand_level": "low"
+    },
+    "competition_level": "low"
+  },
+  "risk_analysis": {
+    "ip_risk_level": "low",
+    "ip_auto_reject": false,
+    "price_stability_score": 1.0,
+    "price_war_detected": false,
+    "return_rate_risk": "low",
+    "seasonal_risk": "non-seasonal",
+    "overall_risk_score": 0.0,
+    "risk_flags": []
+  },
+  "verdict": {
+    "arbitrage_verdict": "no_go",
+    "arbitrage_reason": "Low ROI (-100.0%); Slow velocity (capital lock)",
+    "dropshipping_verdict": "no_go",
+    "dropshipping_reason": "Consider velocity and margins",
+    "private_label_verdict": "no_go",
+    "private_label_reason": "PL Score too low (39/100); No clear improvement gap",
+    "recommended_model": null,
+    "overall_verdict": "no_go",
+    "summary": "❌ NOT RECOMMENDED: Risk factors outweigh potential"
+  },
+  "data_quality_score": 0.0,
+  "analysis_timestamp": "2026-02-01T20:49:43.657076",
+  "engine_version": "1.0.0"
+}

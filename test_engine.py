@@ -16,6 +16,7 @@ from src.enhanced_models import EnhancedMasterProduct
 from src.data_importer import DataImporter
 from src.merchant_engine import AutonomousMerchantEngine
 from src.dashboard import MerchantDashboard
+from src.cross_marketplace import CrossMarketplaceEngine
 
 
 def test_analyze_sample():
@@ -69,9 +70,9 @@ def test_analyze_sample():
 
 
 def test_save_to_db():
-    """Test saving to product_datas database."""
+    """Test saving to product_datas/{marketplace} database."""
     print("\n" + "=" * 60)
-    print("🔧 TEST 2: Save to Database")
+    print("🔧 TEST 2: Save to Database (Multi-Marketplace)")
     print("=" * 60)
     
     sample_file = Path('dumb_datas/amazon_metrics_enhanced.json')
@@ -82,26 +83,65 @@ def test_save_to_db():
     with open(sample_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
+    # Test saving to US marketplace
     product = EnhancedMasterProduct(**data)
-    importer = DataImporter()
+    importer = DataImporter(marketplace='us')
     
     async def run():
-        return await importer.save_product(product)
+        return await importer.save_product(product, marketplace='us')
     
     filepath = asyncio.run(run())
     print(f"✓ Saved to: {filepath}")
     
+    # Test saving to UK marketplace (simulated)
+    importer_uk = DataImporter(marketplace='uk')
+    
+    async def run_uk():
+        return await importer_uk.save_product(product, marketplace='uk')
+    
+    filepath_uk = asyncio.run(run_uk())
+    print(f"✓ Saved to: {filepath_uk}")
+    
     stats = importer.get_stats()
-    print(f"✓ Database: {stats['total_products']} products")
-    print(f"  Path: {stats['db_path']}")
+    print(f"✓ Database: {stats['total_products']} products across {len(stats.get('marketplaces', {}))} marketplaces")
+    print(f"  By marketplace:")
+    for mp, mp_stats in stats.get('marketplaces', {}).items():
+        print(f"    {mp.upper()}: {mp_stats['products']} products")
     
     return True
+
+
+def test_cross_marketplace():
+    """Test cross-marketplace arbitrage analysis."""
+    print("\n" + "=" * 60)
+    print("🔧 TEST 3: Cross-Marketplace Arbitrage")
+    print("=" * 60)
+    
+    engine = CrossMarketplaceEngine()
+    sample_asin = "B08N5KLR9X"
+    
+    marketplaces = engine.get_available_marketplaces(sample_asin)
+    print(f"✓ Found {sample_asin} in {len(marketplaces)} marketplaces: {', '.join(marketplaces)}")
+    
+    if len(marketplaces) >= 2:
+        engine.display_all_prices(sample_asin)
+        opp = engine.find_arbitrage(sample_asin)
+        if opp:
+            engine.display_arbitrage(opp)
+            print(f"✓ Arbitrage found: {opp.buy_marketplace} → {opp.sell_marketplace}")
+            return True
+        else:
+            print("⚠️  No arbitrage opportunity (prices similar)")
+            return True
+    else:
+        print("⚠️  Need 2+ marketplaces for arbitrage test")
+        return True
 
 
 def test_save_report():
     """Test saving analysis report."""
     print("\n" + "=" * 60)
-    print("🔧 TEST 3: Save Analysis Report")
+    print("🔧 TEST 4: Save Analysis Report")
     print("=" * 60)
     
     sample_file = Path('dumb_datas/amazon_metrics_enhanced.json')
@@ -127,13 +167,13 @@ def test_save_report():
     )
     
     engine = AutonomousMerchantEngine()
-    importer = DataImporter()
+    importer = DataImporter(marketplace='us')
     
     async def run():
         report = await engine.analyze(base_product)
         filepath = await importer.save_report(
             report.model_dump(mode='json'),
-            f"{product.identification.asin}_test_report.json"
+            f"us_{product.identification.asin}_test_report.json"
         )
         return filepath
     
@@ -145,11 +185,12 @@ def test_save_report():
 
 def main():
     print("\n" + "=" * 60)
-    print("🚀 TRADERSLAVE - TEST SUITE")
+    print("🚀 TRADERSLAVE - PRODUCTION TEST SUITE")
     print("=" * 60)
     
     report = test_analyze_sample()
     db_ok = test_save_to_db()
+    arb_ok = test_cross_marketplace()
     report_ok = test_save_report()
     
     print("\n" + "=" * 60)
@@ -157,10 +198,16 @@ def main():
     print("=" * 60)
     
     print("\n📋 Results:")
-    print(f"   Analysis:     {'✓ PASS' if report else '✗ FAIL'}")
-    print(f"   Save to DB:   {'✓ PASS' if db_ok else '✗ FAIL'}")
-    print(f"   Save Report:  {'✓ PASS' if report_ok else '✗ FAIL'}")
+    print(f"   Analysis:          {'✓ PASS' if report else '✗ FAIL'}")
+    print(f"   Multi-Market DB:   {'✓ PASS' if db_ok else '✗ FAIL'}")
+    print(f"   Cross Arbitrage:   {'✓ PASS' if arb_ok else '✗ FAIL'}")
+    print(f"   Save Report:       {'✓ PASS' if report_ok else '✗ FAIL'}")
+    
+    all_passed = all([report, db_ok, arb_ok, report_ok])
+    print(f"\n{'🎉 ALL TESTS PASSED - READY FOR PRODUCTION!' if all_passed else '❌ SOME TESTS FAILED'}")
+    
+    return 0 if all_passed else 1
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())

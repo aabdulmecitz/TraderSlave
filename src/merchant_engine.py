@@ -90,8 +90,9 @@ class AutonomousMerchantEngine:
         sales = product.sales_analytics
         logistics = product.logistics_and_physical
         
-        buy_box = pricing.buy_box_price if pricing else 0.0
-        amazon_fees = pricing.amazon_referral_fee_est if pricing else 0.0
+        # Safe extraction with None handling
+        buy_box = (pricing.buy_box_price if pricing and pricing.buy_box_price else 0.0) or 0.0
+        amazon_fees = (pricing.amazon_referral_fee_est if pricing and pricing.amazon_referral_fee_est else 0.0) or 0.0
         
         fba_costs = self._calculate_fba_costs(logistics)
         overhead = buy_box * self.OVERHEAD_PERCENTAGE
@@ -102,14 +103,16 @@ class AutonomousMerchantEngine:
         roi = (net_profit / total_investment * 100) if total_investment > 0 else 0.0
         margin = (net_profit / buy_box * 100) if buy_box > 0 else 0.0
         
-        amazon_is_seller = competition.amazon_is_seller if competition else False
-        fba_count = competition.fba_seller_count if competition else 0
-        total_offers = competition.total_offer_count if competition else 0
+        # Safe extraction with None handling for competition
+        amazon_is_seller = (competition.amazon_is_seller if competition and competition.amazon_is_seller is not None else False)
+        fba_count = (competition.fba_seller_count if competition and competition.fba_seller_count is not None else 0) or 0
+        total_offers = (competition.total_offer_count if competition and competition.total_offer_count is not None else 0) or 0
         
         buybox_risk = self._assess_buybox_risk(amazon_is_seller, fba_count, total_offers)
         
-        bsr_change = sales.bsr_change_percentage if sales else 0.0
-        monthly_sales = sales.estimated_monthly_sales if sales else 0
+        # Safe extraction for sales
+        bsr_change = (sales.bsr_change_percentage if sales and sales.bsr_change_percentage is not None else 0.0) or 0.0
+        monthly_sales = (sales.estimated_monthly_sales if sales and sales.estimated_monthly_sales is not None else 0) or 0
         velocity = self._assess_velocity(bsr_change, monthly_sales)
         
         capital_turnover = None
@@ -179,24 +182,29 @@ class AutonomousMerchantEngine:
         competition = product.competition_and_inventory
         pricing = product.pricing_mechanics
         
-        list_price = pricing.list_price if pricing else 0.0
-        target_cogs = list_price * self.PL_COGS_TARGET_RATIO
+        # Safe extraction with None handling
+        list_price = (pricing.list_price if pricing and pricing.list_price else 0.0) or 0.0
+        buy_box = (pricing.buy_box_price if pricing and pricing.buy_box_price else 0.0) or 0.0
         
-        buy_box = pricing.buy_box_price if pricing else 0.0
+        # Use buy_box if list_price is 0
+        if list_price == 0:
+            list_price = buy_box
+        
+        target_cogs = list_price * self.PL_COGS_TARGET_RATIO
         projected_profit = buy_box - target_cogs - (buy_box * self.OVERHEAD_PERCENTAGE)
         projected_margin = (projected_profit / buy_box * 100) if buy_box > 0 else 0.0
         
         sentiment_gaps = self._extract_sentiment_gaps(sentiment)
         
-        bsr_current = sales.bsr_current if sales else 999999
-        rating = sentiment.rating_overall if sentiment else 5.0
+        bsr_current = (sales.bsr_current if sales and sales.bsr_current else 999999) or 999999
+        rating = (sentiment.rating_overall if sentiment and sentiment.rating_overall else 5.0) or 5.0
         has_opportunity = bsr_current < 5000 and rating < 4.5 and len(sentiment_gaps) > 0
         
         pl_score, breakdown = self._calculate_pl_score(product)
         
-        fba_count = competition.fba_seller_count if competition else 0
-        review_velocity = sentiment.review_velocity_monthly if sentiment else 0
-        monthly_sales = sales.estimated_monthly_sales if sales else 0
+        fba_count = (competition.fba_seller_count if competition and competition.fba_seller_count else 0) or 0
+        review_velocity = (sentiment.review_velocity_monthly if sentiment and sentiment.review_velocity_monthly else 0) or 0
+        monthly_sales = (sales.estimated_monthly_sales if sales and sales.estimated_monthly_sales else 0) or 0
         
         market_demand = {
             "review_velocity_monthly": review_velocity,
@@ -264,7 +272,7 @@ class AutonomousMerchantEngine:
         sentiment = product.sentiment_and_quality
         competition = product.competition_and_inventory
         
-        monthly_sales = sales.estimated_monthly_sales if sales else 0
+        monthly_sales = (sales.estimated_monthly_sales if sales and sales.estimated_monthly_sales else 0) or 0
         if monthly_sales >= 1000:
             velocity_score = 100
         elif monthly_sales >= 500:
@@ -275,7 +283,7 @@ class AutonomousMerchantEngine:
             velocity_score = 20
         breakdown["velocity_score"] = velocity_score
         
-        rating = sentiment.rating_overall if sentiment else 5.0
+        rating = (sentiment.rating_overall if sentiment and sentiment.rating_overall else 5.0) or 5.0
         if rating < 3.5:
             rating_gap_score = 100
         elif rating < 4.0:
@@ -286,7 +294,7 @@ class AutonomousMerchantEngine:
             rating_gap_score = 20
         breakdown["rating_gap_score"] = rating_gap_score
         
-        fba_count = competition.fba_seller_count if competition else 0
+        fba_count = (competition.fba_seller_count if competition and competition.fba_seller_count else 0) or 0
         if fba_count <= 2:
             competition_score = 100
         elif fba_count <= 5:
@@ -297,7 +305,7 @@ class AutonomousMerchantEngine:
             competition_score = 10
         breakdown["competition_score"] = competition_score
         
-        review_velocity = sentiment.review_velocity_monthly if sentiment else 0
+        review_velocity = (sentiment.review_velocity_monthly if sentiment and sentiment.review_velocity_monthly else 0) or 0
         if review_velocity >= 100:
             momentum_score = 100
         elif review_velocity >= 50:
@@ -326,13 +334,13 @@ class AutonomousMerchantEngine:
         ip_level = RiskLevel.HIGH if ip_risk_str == "high" else RiskLevel.MEDIUM if ip_risk_str == "medium" else RiskLevel.LOW
         ip_auto_reject = ip_level == RiskLevel.HIGH
         
-        stability = pricing.price_stability_score if pricing else 1.0
+        stability = (pricing.price_stability_score if pricing and pricing.price_stability_score is not None else 1.0) or 1.0
         price_war = stability < 0.5
         
-        return_rate = risk.return_rate_estimated if risk else 0.0
+        return_rate = (risk.return_rate_estimated if risk and risk.return_rate_estimated is not None else 0.0) or 0.0
         return_risk = RiskLevel.HIGH if return_rate > 0.10 else RiskLevel.MEDIUM if return_rate > 0.05 else RiskLevel.LOW
         
-        seasonal = risk.seasonal_factor if risk else "non-seasonal"
+        seasonal = (risk.seasonal_factor if risk and risk.seasonal_factor else "non-seasonal") or "non-seasonal"
         
         risk_flags = []
         overall_risk = 0.0
