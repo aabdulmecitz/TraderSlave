@@ -1,0 +1,40 @@
+services:
+  # Scrape ASINs and save to database
+  scraper:
+    build: .
+    container_name: traderslave-scraper
+    volumes:
+      - ./product_datas:/app/product_datas
+      - ./output:/app/output
+      - ./config:/app/config:ro
+      - ./asins.txt:/app/asins.txt:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python -m src.main --file /app/asins.txt --with-analysis
+
+  # Show database stats
+  stats:
+    build: .
+    container_name: traderslave-stats
+    volumes:
+      - ./product_datas:/app/product_datas:ro
+      - ./output:/app/output:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python -m src.main --stats
+    profiles:
+      - stats
+
+  # Run test suite
+  test:
+    build: .
+    container_name: traderslave-test
+    volumes:
+      - ./dumb_datas:/app/dumb_datas:ro
+      - ./product_datas:/app/product_datas
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python test_engine.py
+    profiles:
+      - test

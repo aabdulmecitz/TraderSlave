@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 from typing import List
 import aiofiles
-from models import MasterProduct
+from .models import MasterProduct
 
 logger = logging.getLogger(__name__)
 
@@ -38,19 +38,13 @@ class DataManager:
             return []
 
     async def save_product(self, product: MasterProduct):
-        """
-        Thread-safe append of a single product to the JSON array.
-        """
+        """Thread-safe append of a single product to the JSON array."""
         async with self.lock:
             data = await self._read_file()
-            
-            # Check for duplicates? For now, we'll just append.
-            # Convert model to dict, exclude defaults if needed, but by_alias=True is often safer
             product_dict = product.model_dump(mode='json')
             data.append(product_dict)
             
             try:
-                # Write to temp file then rename for atomic write
                 temp_filename = f"{self.filename}.tmp"
                 async with aiofiles.open(temp_filename, mode='w') as f:
                     await f.write(json.dumps(data, indent=2))
@@ -61,9 +55,7 @@ class DataManager:
                 logger.error(f"Failed to save product: {e}")
 
     async def save_batch(self, products: List[MasterProduct]):
-        """
-        Thread-safe batch save.
-        """
+        """Thread-safe batch save."""
         async with self.lock:
             data = await self._read_file()
             for p in products:

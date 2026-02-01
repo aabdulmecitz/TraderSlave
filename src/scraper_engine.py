@@ -3,38 +3,39 @@ import logging
 import random
 from typing import Optional, List
 from playwright.async_api import async_playwright, Browser, BrowserContext, Page, Playwright
-from playwright_stealth import stealth_async
 
-# Configure logging
+try:
+    from playwright_stealth import stealth_async
+    HAS_STEALTH = True
+except ImportError:
+    HAS_STEALTH = False
+
+from .config_manager import config
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 class AmazonScraperEngine:
     """
     Asynchronous Scraper Engine using Playwright with stealth capabilities
-    and rotating User-Agents.
+    and rotating User-Agents. Configuration loaded from config/scraping_config.json.
     """
-    
-    USER_AGENTS = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
-    ]
 
-    def __init__(self, headless: bool = True, timeout: int = 30000, max_retries: int = 3):
-        self.headless = headless
-        self.timeout = timeout
-        self.max_retries = max_retries
+    def __init__(self, headless: bool = None, timeout: int = None, max_retries: int = None):
+        # Use config values as defaults, allow override via constructor
+        self.headless = headless if headless is not None else config.headless
+        self.timeout = timeout if timeout is not None else config.timeout
+        self.max_retries = max_retries if max_retries is not None else config.max_retries
+        self.base_url = config.base_url
+        self.user_agents = config.user_agents
+        self.delay = config.delay
+        
         self.playwright: Optional[Playwright] = None
         self.browser: Optional[Browser] = None
         self.context: Optional[BrowserContext] = None
+        
+        logger.info(f"ScraperEngine initialized: marketplace={config.marketplace}, base_url={self.base_url}")
         
     async def __aenter__(self):
         self.playwright = await async_playwright().start()
@@ -48,7 +49,9 @@ class AmazonScraperEngine:
             await self.playwright.stop()
 
     def _get_random_user_agent(self) -> str:
-        return random.choice(self.USER_AGENTS)
+        return random.choice(self.user_agents) if self.user_agents else (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        )
 
     async def _create_context(self) -> BrowserContext:
         user_agent = self._get_random_user_agent()
@@ -67,7 +70,7 @@ class AmazonScraperEngine:
         Fetches the product page for a given ASIN with retries and rotation.
         Returns the HTML content string or None if failed.
         """
-        url = f"https://www.amazon.com/dp/{asin}"
+        url = f"{self.base_url}{asin}"
         
         for attempt in range(self.max_retries):
             context = None
@@ -76,16 +79,13 @@ class AmazonScraperEngine:
                 context = await self._create_context()
                 page = await context.new_page()
                 
-                # Apply stealth
-                await stealth_async(page)
+                if HAS_STEALTH:
+                    await stealth_async(page)
                 
                 logger.info(f"Fetching {asin} (Attempt {attempt + 1}/{self.max_retries})")
                 
-                # Navigate
                 await page.goto(url, timeout=self.timeout, wait_until="domcontentloaded")
                 
-                # Basic check for bot detection/captcha
-                # In a real scenario, you'd add more sophisticated checks here
                 content = await page.content()
                 
                 if "Type the characters you see below" in content:
@@ -100,7 +100,6 @@ class AmazonScraperEngine:
                     logger.error(f"Failed to fetch {asin} after {self.max_retries} attempts")
                     return None
                 
-                # Exponential backoff
                 await asyncio.sleep(2 ** attempt + random.uniform(1, 3))
             
             finally:

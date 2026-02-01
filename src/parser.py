@@ -2,17 +2,15 @@ import logging
 import re
 from typing import Dict, Any, Optional, List
 from bs4 import BeautifulSoup, Tag
-from models import (
+from .models import (
     MasterProduct, Identification, SalesAnalytics, PricingMechanics,
     CompetitionAndInventory, SentimentAndQuality, LogisticsAndPhysical,
     ContentAssets, RiskAssessment, CompetitorStockLevel, RatingBreakdown, Dimensions
 )
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Centralized Selector Map for easy updates
 SELECTOR_MAP = {
     "identification": {
         "title": "#productTitle",
@@ -21,7 +19,7 @@ SELECTOR_MAP = {
         "category_path": "#wayfinding-breadcrumbs_feature_div ul li a",
     },
     "sales_analytics": {
-        "bsr_info": "#SalesRank", # Often extracting text involves regex
+        "bsr_info": "#SalesRank",
     },
     "pricing_mechanics": {
         "buy_box_price": ".a-price .a-offscreen", 
@@ -70,9 +68,6 @@ class AmazonParser:
         return None
 
     def parse(self, html: str, asin: str) -> Optional[MasterProduct]:
-        """
-        Parses HTML string and returns a MasterProduct instance.
-        """
         if not html:
             logger.error(f"Empty HTML provided for {asin}")
             return None
@@ -101,7 +96,6 @@ class AmazonParser:
     def _extract_identification(self, soup: BeautifulSoup, asin: str) -> Identification:
         selectors = SELECTOR_MAP["identification"]
         
-        # Category path extraction
         categories = []
         cat_elements = soup.select(selectors["category_path"])
         for cat in cat_elements:
@@ -113,11 +107,9 @@ class AmazonParser:
             brand=self._get_text(soup, selectors["brand"]),
             manufacturer=self._get_text(soup, selectors["manufacturer"]),
             category_path=categories
-            # parent_asin, ean_upc, mpn often require more complex extraction or API calls
         )
 
     def _extract_sales_analytics(self, soup: BeautifulSoup) -> SalesAnalytics:
-        # Placeholder logic - often requires regex on specific containers
         return SalesAnalytics()
 
     def _extract_pricing(self, soup: BeautifulSoup) -> PricingMechanics:
@@ -132,7 +124,6 @@ class AmazonParser:
         )
 
     def _extract_competition(self, soup: BeautifulSoup) -> CompetitionAndInventory:
-        # Logic to extract seller counts / stock would go here
         return CompetitionAndInventory()
 
     def _extract_sentiment(self, soup: BeautifulSoup) -> SentimentAndQuality:
@@ -141,7 +132,7 @@ class AmazonParser:
         rating_text = self._get_text(soup, selectors["rating_overall"])
         review_count_text = self._get_text(soup, selectors["review_count"])
         
-        rating = self._extract_price(rating_text) # Reusing float extractor
+        rating = self._extract_price(rating_text)
         reviews = self._extract_int(review_count_text)
         
         return SentimentAndQuality(
@@ -150,7 +141,6 @@ class AmazonParser:
         )
 
     def _extract_logistics(self, soup: BeautifulSoup) -> LogisticsAndPhysical:
-        # Extraction logic for product details table
         return LogisticsAndPhysical()
 
     def _extract_content(self, soup: BeautifulSoup) -> ContentAssets:
@@ -171,5 +161,4 @@ class AmazonParser:
         )
 
     def _extract_risk(self, soup: BeautifulSoup) -> RiskAssessment:
-        # Risk logic is often heuristics-based
         return RiskAssessment()

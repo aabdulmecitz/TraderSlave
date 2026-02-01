@@ -1,0 +1,166 @@
+#!/usr/bin/env python3
+"""
+TraderSlave Test Suite
+Uses dumb_datas/ as sample template for testing.
+Run: python test_engine.py
+"""
+import asyncio
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, '.')
+
+from src.models import MasterProduct
+from src.enhanced_models import EnhancedMasterProduct
+from src.data_importer import DataImporter
+from src.merchant_engine import AutonomousMerchantEngine
+from src.dashboard import MerchantDashboard
+
+
+def test_analyze_sample():
+    """Test analysis using sample template from dumb_datas/."""
+    print("=" * 60)
+    print("🔧 TEST 1: Analyze Sample Template")
+    print("=" * 60)
+    
+    sample_file = Path('dumb_datas/amazon_metrics_enhanced.json')
+    if not sample_file.exists():
+        print("✗ Sample file not found: dumb_datas/amazon_metrics_enhanced.json")
+        return None
+    
+    with open(sample_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    product = EnhancedMasterProduct(**data)
+    print(f"✓ Loaded template: {product.identification.title[:50]}...")
+    print(f"  ASIN: {product.identification.asin}")
+    print(f"  Schema: v{product.meta.schema_version}")
+    
+    # Convert to MasterProduct by dumping to dict first
+    product_dict = product.model_dump(mode='json')
+    base_product = MasterProduct(
+        identification=product_dict['identification'],
+        sales_analytics=product_dict.get('sales_analytics'),
+        pricing_mechanics=product_dict.get('pricing_mechanics'),
+        competition_and_inventory=product_dict.get('competition_and_inventory'),
+        sentiment_and_quality=product_dict.get('sentiment_and_quality'),
+        logistics_and_physical=product_dict.get('logistics_and_physical'),
+        content_assets=product_dict.get('content_assets'),
+        risk_assessment=product_dict.get('risk_assessment'),
+        data_quality_score=product.meta.data_quality_score if product.meta else 0.5,
+    )
+    
+    engine = AutonomousMerchantEngine()
+    
+    async def run():
+        return await engine.analyze(base_product)
+    
+    report = asyncio.run(run())
+    MerchantDashboard().display(report)
+    
+    print(f"\n📊 Summary:")
+    print(f"   Net Profit: ${report.arbitrage_analysis.net_profit:.2f}")
+    print(f"   ROI: {report.arbitrage_analysis.roi_percentage:.1f}%")
+    print(f"   PL Score: {report.private_label_analysis.pl_score}/100")
+    print(f"   Verdict: {report.verdict.overall_verdict.value.upper()}")
+    
+    return report
+
+
+def test_save_to_db():
+    """Test saving to product_datas database."""
+    print("\n" + "=" * 60)
+    print("🔧 TEST 2: Save to Database")
+    print("=" * 60)
+    
+    sample_file = Path('dumb_datas/amazon_metrics_enhanced.json')
+    if not sample_file.exists():
+        print("⚠️  Sample file not found")
+        return False
+    
+    with open(sample_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    product = EnhancedMasterProduct(**data)
+    importer = DataImporter()
+    
+    async def run():
+        return await importer.save_product(product)
+    
+    filepath = asyncio.run(run())
+    print(f"✓ Saved to: {filepath}")
+    
+    stats = importer.get_stats()
+    print(f"✓ Database: {stats['total_products']} products")
+    print(f"  Path: {stats['db_path']}")
+    
+    return True
+
+
+def test_save_report():
+    """Test saving analysis report."""
+    print("\n" + "=" * 60)
+    print("🔧 TEST 3: Save Analysis Report")
+    print("=" * 60)
+    
+    sample_file = Path('dumb_datas/amazon_metrics_enhanced.json')
+    if not sample_file.exists():
+        return False
+    
+    with open(sample_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    product = EnhancedMasterProduct(**data)
+    product_dict = product.model_dump(mode='json')
+    
+    base_product = MasterProduct(
+        identification=product_dict['identification'],
+        sales_analytics=product_dict.get('sales_analytics'),
+        pricing_mechanics=product_dict.get('pricing_mechanics'),
+        competition_and_inventory=product_dict.get('competition_and_inventory'),
+        sentiment_and_quality=product_dict.get('sentiment_and_quality'),
+        logistics_and_physical=product_dict.get('logistics_and_physical'),
+        content_assets=product_dict.get('content_assets'),
+        risk_assessment=product_dict.get('risk_assessment'),
+        data_quality_score=product.meta.data_quality_score if product.meta else 0.5,
+    )
+    
+    engine = AutonomousMerchantEngine()
+    importer = DataImporter()
+    
+    async def run():
+        report = await engine.analyze(base_product)
+        filepath = await importer.save_report(
+            report.model_dump(mode='json'),
+            f"{product.identification.asin}_test_report.json"
+        )
+        return filepath
+    
+    filepath = asyncio.run(run())
+    print(f"✓ Report saved: {filepath}")
+    
+    return True
+
+
+def main():
+    print("\n" + "=" * 60)
+    print("🚀 TRADERSLAVE - TEST SUITE")
+    print("=" * 60)
+    
+    report = test_analyze_sample()
+    db_ok = test_save_to_db()
+    report_ok = test_save_report()
+    
+    print("\n" + "=" * 60)
+    print("✅ TESTS COMPLETED")
+    print("=" * 60)
+    
+    print("\n📋 Results:")
+    print(f"   Analysis:     {'✓ PASS' if report else '✗ FAIL'}")
+    print(f"   Save to DB:   {'✓ PASS' if db_ok else '✗ FAIL'}")
+    print(f"   Save Report:  {'✓ PASS' if report_ok else '✗ FAIL'}")
+
+
+if __name__ == "__main__":
+    main()

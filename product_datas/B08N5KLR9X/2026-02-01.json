@@ -1,0 +1,591 @@
+{
+  "meta": {
+    "schema_version": "2.0.0",
+    "scraped_at": "2026-02-01T14:30:00Z",
+    "source": "amazon_us",
+    "marketplace": "amazon.com",
+    "data_quality_score": 0.98,
+    "scrape_duration_ms": 1250,
+    "proxy_region": "us-east-1"
+  },
+  "identification": {
+    "asin": "B08N5KLR9X",
+    "parent_asin": "B08N5M1K2L",
+    "ean_upc": "0123456789012",
+    "isbn": null,
+    "mpn": "XYZ-COFFEE-01",
+    "model_number": "AeroPress-Clear",
+    "brand": "Aeropress",
+    "manufacturer": "Aeropress Inc",
+    "title": "AeroPress Clear Coffee Maker, Made in USA",
+    "title_length": 45,
+    "color": "Clear",
+    "size": "Standard",
+    "style": null,
+    "material": "Tritan Plastic",
+    "category_path": [
+      "Home & Kitchen",
+      "Kitchen & Dining",
+      "Coffee, Tea & Espresso",
+      "Coffee Makers",
+      "French Presses"
+    ],
+    "category_id": "284507",
+    "product_group": "Kitchen"
+  },
+  "sales_analytics": {
+    "bsr_current": 450,
+    "bsr_category": "Kitchen & Dining",
+    "bsr_90_day_avg": 510,
+    "bsr_30_day_avg": 475,
+    "bsr_7_day_avg": 445,
+    "bsr_change_percentage": -12.5,
+    "bsr_change_7d": -5.2,
+    "bsr_change_30d": -8.4,
+    "bsr_trend": "improving",
+    "bsr_subcategory_ranks": [
+      {
+        "category": "Coffee Makers",
+        "rank": 12
+      },
+      {
+        "category": "French Presses",
+        "rank": 3
+      },
+      {
+        "category": "Kitchen & Dining",
+        "rank": 450
+      }
+    ],
+    "bsr_history": [
+      {
+        "date": "2026-01-01",
+        "bsr": 520,
+        "category": "Kitchen & Dining"
+      },
+      {
+        "date": "2026-01-15",
+        "bsr": 495,
+        "category": "Kitchen & Dining"
+      },
+      {
+        "date": "2026-02-01",
+        "bsr": 450,
+        "category": "Kitchen & Dining"
+      }
+    ],
+    "estimated_monthly_sales": 1250,
+    "estimated_daily_sales": 41.7,
+    "estimated_monthly_revenue": 49950.0,
+    "estimated_yearly_revenue": 599400.0,
+    "units_sold_lifetime_est": 125000,
+    "sales_trend_7d": "increasing",
+    "sales_trend_30d": "stable",
+    "sales_velocity_label": "High",
+    "sales_rank_percentile": 0.02
+  },
+  "pricing_mechanics": {
+    "buy_box_price": 39.95,
+    "currency": "USD",
+    "list_price": 49.95,
+    "was_price": 44.95,
+    "sale_price": null,
+    "discount_percentage": 20.0,
+    "discount_amount": 10.0,
+    "lowest_new_price": 38.5,
+    "lowest_used_price": 28.99,
+    "highest_new_price": 52.0,
+    "lowest_fba_price": 39.95,
+    "lowest_fbm_price": 38.5,
+    "price_history": [
+      {
+        "date": "2026-01-01",
+        "price": 41.95,
+        "source": "buybox"
+      },
+      {
+        "date": "2026-01-15",
+        "price": 40.5,
+        "source": "buybox"
+      },
+      {
+        "date": "2026-02-01",
+        "price": 39.95,
+        "source": "buybox"
+      }
+    ],
+    "historical_price_90d_avg": 40.5,
+    "historical_price_90d_min": 36.95,
+    "historical_price_90d_max": 45.0,
+    "price_volatility_score": 0.12,
+    "price_stability_score": 0.92,
+    "map_price": 35.0,
+    "wholesale_price_est": 18.0,
+    "cogs_estimate": 12.5,
+    "profit_margin_at_buybox": 0.35,
+    "breakeven_price": 26.0,
+    "amazon_referral_fee_est": 5.99,
+    "amazon_referral_fee_pct": 15.0,
+    "fba_fulfillment_fee": 3.22,
+    "fba_storage_fee_monthly": 0.45,
+    "fba_total_fee": 9.66,
+    "coupon_active": false,
+    "coupon_value": null,
+    "subscribe_save_discount": 5.0,
+    "prime_exclusive_deal": false
+  },
+  "competition_and_inventory": {
+    "total_offer_count": 12,
+    "new_offer_count": 10,
+    "used_offer_count": 2,
+    "fba_seller_count": 8,
+    "fbm_seller_count": 3,
+    "amazon_is_seller": false,
+    "buy_box_winner": "CoffeeDirect_Store",
+    "buy_box_winner_is_fba": true,
+    "buy_box_seller_rating": 98,
+    "buy_box_ownership_pct": 72.5,
+    "top_competitors": [
+      {
+        "seller_id": "A1B2C3D4E5",
+        "seller_name": "CoffeeDirect_Store",
+        "price": 39.95,
+        "rating_percentage": 98,
+        "rating_count": 15420,
+        "is_fba": true,
+        "is_amazon": false,
+        "ships_from": "Amazon Fulfillment",
+        "delivery_days": 2,
+        "stock_estimate": 250
+      },
+      {
+        "seller_id": "F6G7H8I9J0",
+        "seller_name": "KitchenPro Supplies",
+        "price": 40.5,
+        "rating_percentage": 95,
+        "rating_count": 8500,
+        "is_fba": true,
+        "is_amazon": false,
+        "ships_from": "Amazon Fulfillment",
+        "delivery_days": 2,
+        "stock_estimate": 45
+      },
+      {
+        "seller_id": "K1L2M3N4O5",
+        "seller_name": "BestDeals4U",
+        "price": 38.5,
+        "rating_percentage": 92,
+        "rating_count": 3200,
+        "is_fba": false,
+        "is_amazon": false,
+        "ships_from": "California",
+        "delivery_days": 5,
+        "stock_estimate": 12
+      }
+    ],
+    "competitor_stock_levels": [
+      {
+        "seller_id": "A1B2C3D4E5",
+        "stock": 250,
+        "last_updated": "2026-02-01T14:00:00Z"
+      },
+      {
+        "seller_id": "F6G7H8I9J0",
+        "stock": 45,
+        "last_updated": "2026-02-01T14:00:00Z"
+      },
+      {
+        "seller_id": "K1L2M3N4O5",
+        "stock": 12,
+        "last_updated": "2026-02-01T14:00:00Z"
+      }
+    ],
+    "market_concentration": "fragmented",
+    "competitive_intensity": "moderate",
+    "new_seller_trend_30d": "+2",
+    "avg_competitor_rating": 95.0,
+    "avg_days_in_stock": 45,
+    "stockout_frequency_90d": 0
+  },
+  "sentiment_and_quality": {
+    "rating_overall": 4.8,
+    "rating_recent_trend": "stable",
+    "review_count": 15420,
+    "review_count_verified": 14250,
+    "review_velocity_monthly": 210,
+    "review_velocity_weekly": 52,
+    "rating_breakdown": {
+      "five_star": 85,
+      "four_star": 10,
+      "three_star": 3,
+      "two_star": 1,
+      "one_star": 1
+    },
+    "rating_history": [
+      {
+        "date": "2026-01-01",
+        "review_count": 15000,
+        "avg_rating": 4.8
+      },
+      {
+        "date": "2026-01-15",
+        "review_count": 15210,
+        "avg_rating": 4.8
+      },
+      {
+        "date": "2026-02-01",
+        "review_count": 15420,
+        "avg_rating": 4.8
+      }
+    ],
+    "top_positive_keywords": [
+      "durable",
+      "easy to clean",
+      "best coffee",
+      "compact",
+      "travel friendly",
+      "quick brew"
+    ],
+    "top_negative_keywords": [
+      "plastic taste",
+      "small capacity",
+      "filter issues",
+      "learning curve"
+    ],
+    "common_complaints": [
+      "Some users report a slight plastic taste in first few uses",
+      "Capacity may be too small for multiple cups",
+      "Paper filters need separate purchase",
+      "Technique requires practice"
+    ],
+    "common_praises": [
+      "Makes exceptionally smooth coffee with low acidity",
+      "Incredibly durable and travel-friendly",
+      "Easy to clean in under 30 seconds",
+      "Compact design perfect for small kitchens",
+      "Made in USA with quality materials"
+    ],
+    "review_samples_positive": [
+      {
+        "stars": 5,
+        "title": "Best coffee maker I've ever owned!",
+        "snippet": "After years of using drip coffee makers and French presses, this AeroPress has completely changed my morning routine. The coffee is incredibly smooth with zero bitterness.",
+        "full_text": "After years of using drip coffee makers and French presses, this AeroPress has completely changed my morning routine. The coffee is incredibly smooth with zero bitterness. I love that I can travel with it and make the same quality coffee anywhere. Cleanup is a breeze - just pop out the puck and rinse. Highly recommended for coffee enthusiasts!",
+        "verified_purchase": true,
+        "helpful_votes": 245,
+        "date": "2026-01-15",
+        "reviewer_id": "R1ABCDEF123"
+      },
+      {
+        "stars": 5,
+        "title": "Perfect for office and travel",
+        "snippet": "I keep one at home and bought a second for the office. It's so much better than the office Keurig and way cheaper per cup.",
+        "full_text": "I keep one at home and bought a second for the office. It's so much better than the office Keurig and way cheaper per cup. My coworkers are now jealous of my coffee. The clear design is a nice upgrade from the original.",
+        "verified_purchase": true,
+        "helpful_votes": 128,
+        "date": "2026-01-22",
+        "reviewer_id": "R2GHIJKL456"
+      }
+    ],
+    "review_samples_negative": [
+      {
+        "stars": 2,
+        "title": "Too small for my needs",
+        "snippet": "Makes great coffee but only one cup at a time. If you're making coffee for a family, look elsewhere.",
+        "full_text": "Makes great coffee but only one cup at a time. If you're making coffee for a family, look elsewhere. I didn't realize how small it was before ordering. The coffee quality is good but the quantity is disappointing.",
+        "verified_purchase": true,
+        "helpful_votes": 89,
+        "date": "2026-01-10",
+        "reviewer_id": "R3MNOPQR789"
+      }
+    ],
+    "review_samples_neutral": [
+      {
+        "stars": 3,
+        "title": "Good but has a learning curve",
+        "snippet": "It took me about 10 tries to get the technique right. Now I love it, but beginners might find it frustrating.",
+        "full_text": "It took me about 10 tries to get the technique right. Now I love it, but beginners might find it frustrating. Watch some YouTube videos before you start. Once you get it, the coffee is amazing.",
+        "verified_purchase": true,
+        "helpful_votes": 56,
+        "date": "2026-01-05",
+        "reviewer_id": "R4STUVWX012"
+      }
+    ],
+    "sentiment_score": 0.87,
+    "recent_review_sentiment": "highly_positive",
+    "review_authenticity_score": 0.94,
+    "image_review_count": 450,
+    "video_review_count": 28,
+    "answered_questions_count": 145,
+    "unanswered_questions_count": 12,
+    "top_questions": [
+      "Does this work with pre-ground coffee?",
+      "How long does the plunger seal last?",
+      "Can I make espresso with this?",
+      "Is it dishwasher safe?",
+      "What grind size works best?"
+    ]
+  },
+  "logistics_and_physical": {
+    "item_weight_grams": 226.0,
+    "item_weight_oz": 8.0,
+    "package_weight_grams": 350.0,
+    "package_weight_oz": 12.3,
+    "item_dimensions": {
+      "length": 11.0,
+      "width": 11.0,
+      "height": 13.0,
+      "unit": "cm"
+    },
+    "package_dimensions": {
+      "length": 12.0,
+      "width": 12.0,
+      "height": 30.0,
+      "unit": "cm"
+    },
+    "dimensions_cm": {
+      "length": 12.0,
+      "width": 12.0,
+      "height": 30.0,
+      "unit": "cm"
+    },
+    "volume_cubic_cm": 4320.0,
+    "volume_cubic_inches": 263.6,
+    "dimensional_weight": 0.86,
+    "size_tier": "Small Standard-Size",
+    "shipping_tier": "Standard",
+    "is_oversize": false,
+    "is_hazmat": false,
+    "is_fragile": false,
+    "is_meltable": false,
+    "is_adult_product": false,
+    "requires_special_handling": false,
+    "origin_country": "USA",
+    "made_in": "United States",
+    "assembly_required": false,
+    "batteries_required": false,
+    "batteries_included": false
+  },
+  "listing_quality": {
+    "title_length": 45,
+    "title_word_count": 7,
+    "title_keyword_count": 4,
+    "title_brand_position": 1,
+    "bullet_count": 5,
+    "bullet_avg_length": 85,
+    "bullets_use_keywords": true,
+    "description_length": 1250,
+    "description_word_count": 180,
+    "image_count": 7,
+    "image_has_infographic": true,
+    "image_has_lifestyle": true,
+    "image_quality_score": 0.92,
+    "video_count": 1,
+    "video_exists": true,
+    "a_plus_content_exists": true,
+    "a_plus_modules": 4,
+    "a_plus_type": "Premium",
+    "brand_story_exists": true,
+    "brand_registered": true,
+    "listing_score": 92,
+    "seo_score": 88,
+    "seo_issues": [
+      "Title could include more keywords",
+      "Alt text missing on some images"
+    ],
+    "seo_recommendations": [
+      "Add 'coffee press' to title",
+      "Include more long-tail keywords in bullets",
+      "Add backend keywords for accessories"
+    ],
+    "mobile_optimized": true,
+    "enhanced_content": true
+  },
+  "content_assets": {
+    "main_image_url": "https://m.media-amazon.com/images/I/71xyz.jpg",
+    "gallery_images": [
+      "https://m.media-amazon.com/images/I/img1.jpg",
+      "https://m.media-amazon.com/images/I/img2.jpg",
+      "https://m.media-amazon.com/images/I/img3.jpg",
+      "https://m.media-amazon.com/images/I/img4.jpg",
+      "https://m.media-amazon.com/images/I/img5.jpg",
+      "https://m.media-amazon.com/images/I/img6.jpg"
+    ],
+    "video_urls": [
+      "https://m.media-amazon.com/videos/vid1.mp4"
+    ],
+    "bullet_points": [
+      "NEW CLEAR DESIGN - See your coffee brew in our latest crystal-clear chamber made from shatter-resistant Tritan plastic",
+      "MADE IN USA - Proudly manufactured in the United States with premium, BPA-free materials",
+      "SMOOTH, RICH COFFEE - Unique pressure brewing extracts incredible flavor while eliminating bitterness and acidity",
+      "QUICK & EASY - Brews a perfect cup in just 1-2 minutes with easy 30-second cleanup",
+      "INCLUDES - Chamber, plunger, filter cap, filter holder, scoop, stirrer, and 100 micro-filters"
+    ],
+    "description_text": "The AeroPress Clear Coffee Maker revolutionizes your morning coffee routine with its innovative pressure brewing technology. Made in the USA from premium Tritan plastic, this durable coffee maker creates smooth, rich coffee with lower acidity than traditional brewing methods. The new clear design lets you watch the brewing process while maintaining the portability and ease of use that made AeroPress famous. Perfect for home, office, or travel, it brews a delicious cup in just 1-2 minutes and cleans up in seconds.",
+    "description_html": null,
+    "from_manufacturer": "AeroPress, Inc. has been making the world's best portable coffee makers since 2005.",
+    "technical_specifications": {
+      "Material": "Tritan Plastic (BPA-free)",
+      "Capacity": "10 oz / 295 ml",
+      "Filter Type": "Micro-filter paper (included)",
+      "Brew Time": "1-2 minutes",
+      "Warranty": "Lifetime warranty on chamber"
+    },
+    "important_information": null,
+    "warranty_info": "Lifetime warranty on the chamber against manufacturing defects",
+    "safety_warnings": null
+  },
+  "variations": {
+    "is_variation_parent": false,
+    "is_variation_child": true,
+    "parent_asin": "B08N5M1K2L",
+    "variation_count": 3,
+    "variation_theme": "style",
+    "variation_dimensions": [
+      "style"
+    ],
+    "all_variations": [
+      {
+        "asin": "B08N5KLR9X",
+        "attribute_name": "style",
+        "attribute_value": "Clear",
+        "price": 39.95,
+        "in_stock": true,
+        "is_current": true
+      },
+      {
+        "asin": "B017OEL8P0",
+        "attribute_name": "style",
+        "attribute_value": "Original (Gray)",
+        "price": 39.95,
+        "in_stock": true,
+        "is_current": false
+      },
+      {
+        "asin": "B07YVL2NMG",
+        "attribute_name": "style",
+        "attribute_value": "Go Travel",
+        "price": 31.95,
+        "in_stock": true,
+        "is_current": false
+      }
+    ],
+    "best_selling_variation": "B017OEL8P0"
+  },
+  "demand_signals": {
+    "search_volume_main_kw": 45000,
+    "search_volume_trend": "stable",
+    "keyword_difficulty": 65,
+    "organic_keyword_count": 1250,
+    "sponsored_keyword_count": 85,
+    "google_trends_score": 72,
+    "google_trends_trend": "stable",
+    "trending_direction": "stable",
+    "seasonality_label": "slight_holiday_peak",
+    "seasonal_index": [
+      0.9,
+      0.85,
+      0.9,
+      0.95,
+      1.0,
+      1.0,
+      0.95,
+      0.95,
+      1.0,
+      1.05,
+      1.2,
+      1.25
+    ],
+    "peak_months": [
+      11,
+      12
+    ],
+    "frequently_bought_together": [
+      "B001EO7EC2",
+      "B07PV74ZSR",
+      "B082WMSFRK"
+    ],
+    "customers_also_viewed": [
+      "B00LOCYKIQ",
+      "B07WVN8L8M",
+      "B07S582F4Q"
+    ],
+    "related_products": [
+      "B001EO7EC2",
+      "B07PV74ZSR",
+      "B0019K16PQ",
+      "B07YZT7DQ1"
+    ]
+  },
+  "risk_assessment": {
+    "ip_infringement_risk": "low",
+    "trademark_protection": "high",
+    "brand_gating": true,
+    "category_gating": false,
+    "return_rate_estimated": 0.02,
+    "return_rate_vs_category": "below_average",
+    "seasonal_factor": "slight_holiday_peak",
+    "demand_volatility": "low",
+    "supply_chain_risk": "low",
+    "counterfeit_risk": "medium",
+    "review_manipulation_risk": "low",
+    "listing_hijack_risk": "low",
+    "regulatory_requirements": [],
+    "certifications_required": [
+      "FDA Food Contact"
+    ],
+    "overall_risk_score": 15.0,
+    "risk_flags": [
+      "Brand gated - approval required to sell"
+    ]
+  },
+  "profit_calculations": {
+    "estimated_cogs": 12.5,
+    "target_cogs_25pct": 9.99,
+    "target_cogs_30pct": 11.99,
+    "fba_fee_breakdown": {
+      "referral_fee": 5.99,
+      "fulfillment_fee": 3.22,
+      "storage_fee": 0.45,
+      "total_fees": 9.66
+    },
+    "total_amazon_fees": 9.66,
+    "fees_as_pct_of_price": 24.2,
+    "breakeven_price": 22.16,
+    "minimum_viable_price": 26.0,
+    "profit_at_buybox": 17.79,
+    "profit_at_lowest": 16.34,
+    "profit_scenarios": [
+      {
+        "scenario_name": "Arbitrage (Wholesale)",
+        "buy_price": 18.0,
+        "sell_price": 39.95,
+        "total_fees": 9.66,
+        "profit": 12.29,
+        "roi_percentage": 68.3,
+        "margin_percentage": 30.8
+      },
+      {
+        "scenario_name": "Private Label (25% COGS)",
+        "buy_price": 9.99,
+        "sell_price": 39.95,
+        "total_fees": 9.66,
+        "profit": 20.3,
+        "roi_percentage": 203.2,
+        "margin_percentage": 50.8
+      },
+      {
+        "scenario_name": "Dropship (30% margin)",
+        "buy_price": 22.0,
+        "sell_price": 39.95,
+        "total_fees": 9.66,
+        "profit": 8.29,
+        "roi_percentage": 37.7,
+        "margin_percentage": 20.8
+      }
+    ],
+    "recommended_sell_price": 39.95,
+    "recommended_max_buy_price": 20.0
+  },
+  "merchant_analysis": null
+}

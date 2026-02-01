@@ -1,0 +1,91 @@
+{
+  "asin": "B08N5KLR9X",
+  "title": "AeroPress Clear Coffee Maker, Made in USA",
+  "brand": "Aeropress",
+  "category": "Home & Kitchen",
+  "arbitrage_analysis": {
+    "buy_box_price": 39.95,
+    "amazon_fees": 5.99,
+    "fba_costs": 3.29,
+    "overhead_cost": 5.992500000000001,
+    "net_profit": 24.68,
+    "roi_percentage": 161.58,
+    "margin_percentage": 61.77,
+    "buybox_risk_level": "medium",
+    "amazon_is_seller": false,
+    "fba_seller_count": 8,
+    "total_offer_count": 12,
+    "velocity_grade": "sprinter",
+    "bsr_trend": "improving",
+    "estimated_monthly_sales": 1250,
+    "capital_turnover_days": 2
+  },
+  "private_label_analysis": {
+    "pl_score": 65,
+    "pl_score_breakdown": {
+      "velocity_score": 100,
+      "rating_gap_score": 20,
+      "competition_score": 40,
+      "momentum_score": 100
+    },
+    "sentiment_gaps": [
+      {
+        "keyword": "plastic taste",
+        "frequency_score": 10.0,
+        "improvement_potential": "Use premium materials (metal, glass, BPA-free)"
+      },
+      {
+        "keyword": "small capacity",
+        "frequency_score": 8.0,
+        "improvement_potential": "Offer larger capacity variant"
+      },
+      {
+        "keyword": "filter issues",
+        "frequency_score": 6.0,
+        "improvement_potential": "Address customer pain point"
+      },
+      {
+        "keyword": "learning curve",
+        "frequency_score": 4.0,
+        "improvement_potential": "Address customer pain point"
+      }
+    ],
+    "has_improvement_opportunity": false,
+    "target_cogs": 12.49,
+    "projected_pl_margin": 53.74,
+    "projected_pl_profit": 21.47,
+    "market_demand_signals": {
+      "review_velocity_monthly": 210,
+      "estimated_monthly_sales": 1250,
+      "bsr_current": 450,
+      "demand_level": "high"
+    },
+    "competition_level": "high"
+  },
+  "risk_analysis": {
+    "ip_risk_level": "low",
+    "ip_auto_reject": false,
+    "price_stability_score": 0.92,
+    "price_war_detected": false,
+    "return_rate_risk": "low",
+    "seasonal_risk": "slight_holiday_peak",
+    "overall_risk_score": 10.0,
+    "risk_flags": [
+      "📅 Seasonal product: slight_holiday_peak"
+    ]
+  },
+  "verdict": {
+    "arbitrage_verdict": "go",
+    "arbitrage_reason": "Good margins and velocity",
+    "dropshipping_verdict": "go",
+    "dropshipping_reason": "Fast turnover suitable for dropship",
+    "private_label_verdict": "conditional",
+    "private_label_reason": "No clear improvement gap; High competition",
+    "recommended_model": "Arbitrage",
+    "overall_verdict": "go",
+    "summary": "✅ APPROVED: Recommended model is Arbitrage | Flags: 1"
+  },
+  "data_quality_score": 0.98,
+  "analysis_timestamp": "2026-02-01T19:07:42.466766",
+  "engine_version": "1.0.0"
+}
