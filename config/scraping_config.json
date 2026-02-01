@@ -30,43 +30,72 @@
         "auto_analyze_on_scrape": false,
         "save_reports": true
     },
+    "enabled_marketplaces": [
+        "us",
+        "uk",
+        "de"
+    ],
     "supported_marketplaces": {
         "amazon_us": {
+            "code": "us",
+            "name": "Amazon US",
+            "flag": "🇺🇸",
             "base_url": "https://www.amazon.com/dp/",
             "currency": "USD",
             "language": "en"
         },
         "amazon_uk": {
+            "code": "uk",
+            "name": "Amazon UK",
+            "flag": "🇬🇧",
             "base_url": "https://www.amazon.co.uk/dp/",
             "currency": "GBP",
             "language": "en"
         },
         "amazon_de": {
+            "code": "de",
+            "name": "Amazon Germany",
+            "flag": "🇩🇪",
             "base_url": "https://www.amazon.de/dp/",
             "currency": "EUR",
             "language": "de"
         },
         "amazon_fr": {
+            "code": "fr",
+            "name": "Amazon France",
+            "flag": "🇫🇷",
             "base_url": "https://www.amazon.fr/dp/",
             "currency": "EUR",
             "language": "fr"
         },
         "amazon_es": {
+            "code": "es",
+            "name": "Amazon Spain",
+            "flag": "🇪🇸",
             "base_url": "https://www.amazon.es/dp/",
             "currency": "EUR",
             "language": "es"
         },
         "amazon_it": {
+            "code": "it",
+            "name": "Amazon Italy",
+            "flag": "🇮🇹",
             "base_url": "https://www.amazon.it/dp/",
             "currency": "EUR",
             "language": "it"
         },
         "amazon_ca": {
+            "code": "ca",
+            "name": "Amazon Canada",
+            "flag": "🇨🇦",
             "base_url": "https://www.amazon.ca/dp/",
             "currency": "CAD",
             "language": "en"
         },
         "amazon_jp": {
+            "code": "jp",
+            "name": "Amazon Japan",
+            "flag": "🇯🇵",
             "base_url": "https://www.amazon.co.jp/dp/",
             "currency": "JPY",
             "language": "ja"

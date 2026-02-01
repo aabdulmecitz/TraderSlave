@@ -1,139 +1,107 @@
 # TraderSlave 🚀
 
-Amazon Product Intelligence Engine - Scrape, analyze, and evaluate products for arbitrage and private label opportunities.
+Multi-Marketplace Amazon Intelligence Engine - Find profitable products across global Amazon marketplaces.
+
+## 🌍 Features
+
+- **Multi-Marketplace Scraping**: US, UK, DE, FR, ES, IT, CA, JP
+- **Cross-Marketplace Arbitrage**: Find buy low / sell high opportunities
+- **Trend Detection**: BSR velocity, review momentum analysis
+- **Profit Calculator**: ROI, margins, FBA fee estimation
+- **Private Label Analysis**: Gap detection, competition scoring
 
 ## Quick Start
 
-### 1. Configure (Optional)
-Edit `config/scraping_config.json` to customize:
-- **Marketplace**: Amazon US, UK, DE, FR, ES, IT, CA, JP
-- **Timeouts and retries**
-- **User agents**
-
+### 1. Configure Marketplaces
+Edit `config/scraping_config.json`:
 ```json
 {
-  "scraper": {
-    "base_url": "https://www.amazon.com/dp/",
-    "marketplace": "amazon_us",
-    "headless": true,
-    "timeout_ms": 30000
-  }
+  "enabled_marketplaces": ["us", "uk", "de", "jp"]
 }
 ```
 
 ### 2. Add ASINs
 ```bash
 echo "B08N5KLR9X" >> asins.txt
-echo "B017OEL8P0" >> asins.txt
 ```
 
-### 3. Run Scraper
+### 3. Scrape Across Marketplaces
 ```bash
-# With Docker
-docker compose up scraper
+# Scrape same product in US, UK, DE
+python -m src.main --multi us,uk,de B08N5KLR9X
 
-# Or locally
-python -m src.main --file asins.txt --with-analysis
+# Find arbitrage opportunities
+python -m src.main --cross-arbitrage B08N5KLR9X
 ```
 
 ## CLI Commands
 
 | Command | Description |
 |---------|-------------|
-| `python -m src.main B08N5KLR9X` | Scrape single ASIN |
-| `python -m src.main --file asins.txt` | Scrape from file |
-| `python -m src.main --with-analysis B08N5KLR9X` | Scrape + analyze |
-| `python -m src.main --analyze-db B08N5KLR9X` | Analyze from database |
-| `python -m src.main --list-db` | List all products |
-| `python -m src.main --stats` | Database statistics |
+| `--marketplace uk ASIN` | Scrape to specific marketplace |
+| `--multi us,uk,de ASIN` | Scrape across multiple marketplaces |
+| `--cross-arbitrage ASIN` | Find cross-market arbitrage |
+| `--analyze-db ASIN` | Analyze from database |
+| `--with-analysis ASIN` | Scrape + analyze |
+| `--list-db` | List all products |
+| `--stats` | Database statistics |
 
-## Project Structure
+## Database Structure
 
 ```
-TraderSlave/
-├── config/
-│   └── scraping_config.json    # ⚙️ Configuration
-├── src/
-│   ├── main.py                 # CLI entry point
-│   ├── scraper_engine.py       # Playwright scraper
-│   ├── parser.py               # HTML parser
-│   ├── merchant_engine.py      # Analysis engine
-│   ├── config_manager.py       # Config loader
-│   ├── data_importer.py        # Database manager
-│   ├── models.py               # Core schemas
-│   └── enhanced_models.py      # LLM training schemas
-├── product_datas/              # 📦 Product database
-│   └── {ASIN}/
+product_datas/
+├── us/                    # 🇺🇸 Amazon.com
+│   └── B08N5KLR9X/
 │       ├── latest.json
-│       └── YYYY-MM-DD.json
-├── output/reports/             # 📊 Analysis reports
-├── dumb_datas/                 # 📋 Sample templates
-└── docker-compose.yml
+│       └── 2026-02-01.json
+├── uk/                    # 🇬🇧 Amazon.co.uk
+│   └── B08N5KLR9X/
+│       └── latest.json
+└── de/                    # 🇩🇪 Amazon.de
+    └── B08N5KLR9X/
+        └── latest.json
 ```
 
-## Configuration
+## Cross-Marketplace Arbitrage
 
-### Supported Marketplaces
+```
+🌍 CROSS-MARKETPLACE ARBITRAGE: B08N5KLR9X
+============================================================
+📦 AeroPress Clear Coffee Maker
 
-| Marketplace | Config Value |
-|-------------|--------------|
-| Amazon US | `amazon_us` |
-| Amazon UK | `amazon_uk` |
-| Amazon Germany | `amazon_de` |
-| Amazon France | `amazon_fr` |
-| Amazon Spain | `amazon_es` |
-| Amazon Italy | `amazon_it` |
-| Amazon Canada | `amazon_ca` |
-| Amazon Japan | `amazon_jp` |
+  💰 BUY FROM:  🇬🇧 UK
+     Price: GBP 28.99 ($36.50)
 
-To change marketplace, edit `config/scraping_config.json`:
-```json
-{
-  "scraper": {
-    "base_url": "https://www.amazon.co.uk/dp/",
-    "marketplace": "amazon_uk"
-  }
-}
+  📤 SELL ON:   🇯🇵 JP
+     Price: JPY 5,980 ($40.12)
+
+  📊 PROFIT:    $3.62 (9.9% margin)
+
+  🟢 STRONG BUY - Excellent arbitrage opportunity
 ```
 
-## Docker Commands
+## Docker
 
 ```bash
-# Scrape ASINs from file
+# Scrape from file
 docker compose up scraper
 
-# View database stats
+# Stats
 docker compose --profile stats up stats
 
-# Run tests
-docker compose --profile test up test
-
-# Rebuild after config changes
-docker compose up --build scraper
-```
-
-## Analysis Output
-
-The merchant engine analyzes:
-- **Arbitrage**: Net profit, ROI, margin, BuyBox risk
-- **Private Label**: PL Score, sentiment gaps, improvement opportunities
-- **Risk**: IP risk, price wars, return rates, seasonality
-
-Verdicts: `GO`, `CONDITIONAL`, or `NO-GO` for each business model.
-
-## Testing
-
-```bash
-# Local
-python test_engine.py
-
-# Docker
+# Test
 docker compose --profile test up test
 ```
 
-## Requirements
+## Supported Marketplaces
 
-- Python 3.10+
-- Playwright
-- Pydantic 2.x
-- Docker (optional)
+| Flag | Code | Site |
+|------|------|------|
+| 🇺🇸 | us | amazon.com |
+| 🇬🇧 | uk | amazon.co.uk |
+| 🇩🇪 | de | amazon.de |
+| 🇫🇷 | fr | amazon.fr |
+| 🇪🇸 | es | amazon.es |
+| 🇮🇹 | it | amazon.it |
+| 🇨🇦 | ca | amazon.ca |
+| 🇯🇵 | jp | amazon.co.jp |

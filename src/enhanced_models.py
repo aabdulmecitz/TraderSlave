@@ -15,6 +15,9 @@ class MetaInfo(BaseModel):
     scraped_at: datetime = Field(default_factory=datetime.utcnow)
     source: str = "amazon_us"
     marketplace: str = "amazon.com"
+    marketplace_code: str = "us"  # us, uk, de, fr, es, it, ca, jp
+    currency: str = "USD"
+    marketplace_url: str = "https://www.amazon.com"
     data_quality_score: float = Field(default=0.0, ge=0, le=1)
     scrape_duration_ms: Optional[int] = None
     proxy_region: Optional[str] = None
